@@ -6,7 +6,20 @@ export default class ProgressBar extends Component {
     
         this.state = {
             color : '#a82222',
-            infos : this.props.infos
+            infos : [
+                {
+                    name : 'Shipping',
+                    completed : true,
+                },
+                {
+                    name : 'second',
+                    completed : true,
+                },
+                {
+                    name : 'third',
+                    completed : true,
+                },
+            ]
         }
     }
     
@@ -89,6 +102,7 @@ const Container = styled.div`
     align-items: center;
     align-content: center;
     width: 100%;
+    height: 100%;
 `;
 const EmptyBar = styled.div`
     height: 6px;
