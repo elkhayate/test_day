@@ -1,16 +1,17 @@
 import { Checkout as SourceCheckout } from 'SourceRoute/Checkout/Checkout.component';
 import ProgressBar from 'Component/ProgressBar';
 export default class Checkout extends SourceCheckout {
-    
-    renderBar() {
-        return <ProgressBar />
+
+
+    renderBar(val) {
+        return <ProgressBar steps = {this.stepMap} check = {val}/>
     }
 
     render() {
         const { checkoutStep } = this.props;
         return(
             <>
-            {this.renderBar()}
+            {this.renderBar(checkoutStep)}
             {super.render()}
             </>
         )

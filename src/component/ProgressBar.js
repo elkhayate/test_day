@@ -6,32 +6,25 @@ export default class ProgressBar extends Component {
     
         this.state = {
             color : '#a82222',
-            infos : [
-                {
-                    name : 'Shipping',
-                    completed : true,
-                },
-                {
-                    name : 'second',
-                    completed : true,
-                },
-                {
-                    name : 'third',
-                    completed : true,
-                },
-            ]
         }
     }
     
     render () {
         let s = this.state;
-        let Out = []
-        for(let i = 0; i < s.infos.length; i++){
-            if(i === s.infos.length - 1){
+        let infos = [];
+        const {steps, check} = this.props;
+        let valSteps = Object.values(steps);
+        let keySteps = Object.keys(steps);
+        for(let i = 0; i < valSteps.length; i ++){
+            infos[infos.length] = {name : valSteps[i].title.replace(/ .*/,''), completed : keySteps[i] === check}
+        }
+        let Out = [];
+        for(let i = 0; i < infos.length; i++){
+            if(i === infos.length - 1){
                 Out[Out.length] = (
-                <Wrapper key = {s.infos[i].name}>
+                <Wrapper key = {infos[i].name}>
                     {
-                        s.infos[i].completed 
+                            infos[i].completed 
                         ? 
                             <FilledBar Color = {s.color} />
                         :
@@ -40,21 +33,21 @@ export default class ProgressBar extends Component {
                 </Wrapper>);
             }else {
                 Out[Out.length] = (
-                <Wrapper key = {s.infos[i].name}>
+                <Wrapper key = {infos[i].name}>
                     {
-                        s.infos[i].completed 
+                        infos[i].completed 
                         ? 
                             <FilledBar Color = {s.color}/>
                         :
                             <EmptyBar />
                     }
                     <WrapperCercle>
-                        <Cercle Color = {s.color} Display = {s.infos[i].completed}>
+                        <Cercle Color = {s.color} Display = {infos[i].completed}>
                             <Text>{
-                                s.infos[i].completed ? '✔️' : i + 1    
+                                infos[i].completed ? '✔️' : i + 1    
                             }</Text>
                         </Cercle>
-                            <Text>{s.infos[i].name}</Text>
+                            <Text>{infos[i].name}</Text>
                     </WrapperCercle>
                 </Wrapper>);
             }
@@ -68,6 +61,7 @@ export default class ProgressBar extends Component {
             </Container>
     }
 }
+
 const WrapperCercle = styled.div`
     display: flex;
     flex-direction: column;
@@ -110,13 +104,14 @@ const EmptyBar = styled.div`
     background: #dbdbdb;
     margin: 5px;
     border-radius:5px;
+    margin-top: 0px;
 `;
 const Cercle = styled.div`
     background: ${props => props.Display ? props.Color :' #dbdbdb'};
     height: 30px;
     width : 30px;
     border-radius: 50%;
-    margin-top: 35px;
+    margin-top: 45px;
     padding: 2px;
     display: flex;
     justify-content: center;
